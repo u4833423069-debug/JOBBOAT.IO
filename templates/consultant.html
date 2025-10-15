@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t.my_consultant }} - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="consultant-container">
+    <div class="consultant-header glass">
+        <h1 class="neon-text">{{ t.consultant_subtitle }}</h1>
+        <p>Powered by Anthropic Claude</p>
+    </div>
+
+    <div class="consultant-layout">
+        <div class="chat-container glass">
+            <div id="chatMessages" class="chat-messages">
+                <div class="message assistant">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>{{ t.zby_greeting }}</p>
+                    </div>
+                </div>
+            </div>
+            <form id="chatForm" class="chat-input-form">
+                <input type="text" id="chatInput" placeholder="Ask me anything..." class="chat-input glass" required>
+                <button type="submit" class="chat-send-btn neon-btn">Send</button>
+            </form>
+        </div>
+
+        <div class="business-card glass neon-card">
+            <div class="card-header">
+                <h3>💼 Your Consultant</h3>
+            </div>
+            <div class="card-body">
+                <h2 class="card-name">Azer Rached</h2>
+                <p class="card-title">Career Automation Expert</p>
+                <div class="card-contact">
+                    <p>📧 azer.rached@example.com</p>
+                    <p>📱 +33 6 12 34 56 78</p>
+                    <p>🌍 Paris, France</p>
+                </div>
+                <div class="card-social">
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">Twitter</a>
+                    <a href="#" class="social-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('chatForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    if (!message) return;
+    
+    const messagesDiv = document.getElementById('chatMessages');
+    messagesDiv.innerHTML += `
+        <div class="message user">
+            <div class="message-content"><p>${message}</p></div>
+            <div class="message-avatar">👤</div>
+        </div>
+    `;
+    input.value = '';
+    
+    messagesDiv.innerHTML += `<div class="message assistant"><div class="message-avatar">🤖</div><div class="message-content"><p class="typing">Thinking...</p></div></div>`;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    
+    const response = await fetch('/api/consult', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ message })
+    });
+    
+    const data = await response.json();
+    const lastMsg = messagesDiv.lastElementChild;
+    lastMsg.querySelector('.message-content').innerHTML = `<p>${data.response || 'Sorry, I encountered an error.'}</p>`;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+});
+</script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t.login }} - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card glass">
+        <h2 class="auth-title neon-text">{{ t.login }}</h2>
+        <form id="loginForm" class="auth-form">
+            <div class="form-group">
+                <label for="email">{{ t.email }}</label>
+                <input type="email" id="email" name="email" required class="form-input glass">
+            </div>
+            <div class="form-group">
+                <label for="password">{{ t.password }}</label>
+                <input type="password" id="password" name="password" required class="form-input glass">
+            </div>
+            <button type="submit" class="btn btn-primary btn-full neon-btn">{{ t.login }}</button>
+        </form>
+        <div class="auth-demo">
+            <p>Demo Account:</p>
+            <p><strong>demo@aijobbot.com</strong> / <strong>demo123</strong></p>
+        </div>
+        <p class="auth-link">Don't have an account? <a href="/register">{{ t.register }}</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const response = await fetch('/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(Object.fromEntries(formData))
+    });
+    if (response.ok) {
+        window.location.href = '/dashboard';
+    } else {
+        alert('Invalid credentials');
+    }
+});
+</script>
+{% endblock %}

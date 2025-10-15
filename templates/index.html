@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container hero-content">
+        <div class="hero-text">
+            <h1 class="hero-title neon-text">{{ t.welcome }} AI JobBot</h1>
+            <p class="hero-subtitle">{{ t.tagline }}</p>
+            <div class="hero-features">
+                <div class="feature-pill glass">🤖 Zby AI Consultant</div>
+                <div class="feature-pill glass">📄 CV Parsing</div>
+                <div class="feature-pill glass">🇫🇷 French Jobs</div>
+                <div class="feature-pill glass">⚡ Auto-Apply</div>
+            </div>
+            <div class="hero-cta">
+                <a href="/register" class="btn btn-primary neon-btn">Get Started Free</a>
+                <a href="/login" class="btn btn-secondary glass">{{ t.try_demo }}</a>
+            </div>
+            <p class="hero-price">€5/month • 1 Month Free Trial</p>
+        </div>
+        <div class="hero-visual">
+            <div class="floating-card glass">
+                <div class="card-content">
+                    <div class="pulse-dot"></div>
+                    <p>AI-Powered Job Search</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="platforms-section">
+    <div class="container">
+        <h2 class="section-title">Supported Job Platforms</h2>
+        <div class="platforms-grid">
+            <div class="platform-card glass">
+                <span class="platform-flag">🇫🇷</span>
+                <h3>Indeed France</h3>
+            </div>
+            <div class="platform-card glass">
+                <span class="platform-flag">🇫🇷</span>
+                <h3>Welcome to the Jungle</h3>
+            </div>
+            <div class="platform-card glass">
+                <span class="platform-flag">🇫🇷</span>
+                <h3>Apec</h3>
+            </div>
+            <div class="platform-card glass">
+                <span class="platform-flag">🇫🇷</span>
+                <h3>JobTeaser</h3>
+            </div>
+            <div class="platform-card glass">
+                <span class="platform-flag">🌍</span>
+                <h3>LinkedIn</h3>
+            </div>
+            <div class="platform-card glass">
+                <span class="platform-flag">🌍</span>
+                <h3>Glassdoor</h3>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

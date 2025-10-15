@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t.dashboard }} - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1 class="neon-text">{{ t.welcome }}, {{ user.username }}!</h1>
+        <p>Your AI Career Automation Center</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card glass">
+            <div class="stat-icon">💳</div>
+            <div class="stat-value">{{ user.credits }}</div>
+            <div class="stat-label">Credits Remaining</div>
+        </div>
+        <div class="stat-card glass">
+            <div class="stat-icon">📄</div>
+            <div class="stat-value">{% if user.cv_uploaded %}✅{% else %}❌{% endif %}</div>
+            <div class="stat-label">CV Status</div>
+        </div>
+        <div class="stat-card glass">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value">{{ stats.total_applications or 0 }}</div>
+            <div class="stat-label">Applications</div>
+        </div>
+        <div class="stat-card glass">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value">{{ stats.active_searches or 0 }}</div>
+            <div class="stat-label">Active Searches</div>
+        </div>
+    </div>
+
+    <div class="dashboard-actions">
+        <div class="action-card glass">
+            <h3>📤 {{ t.upload_cv }}</h3>
+            <form id="cvUploadForm" enctype="multipart/form-data">
+                <input type="file" id="cvFile" name="cv_file" accept=".pdf,.doc,.docx" class="file-input" required>
+                <button type="submit" class="btn btn-primary neon-btn">Parse CV with Qwen2</button>
+            </form>
+            <div id="cvResult" class="cv-result"></div>
+        </div>
+
+        <div class="action-card glass">
+            <h3>🔍 {{ t.job_search }}</h3>
+            <form id="jobSearchForm">
+                <input type="text" name="query" placeholder="Job title or keywords" class="form-input glass" required>
+                <input type="text" name="location" placeholder="Location (e.g., Paris, France)" class="form-input glass">
+                <button type="submit" class="btn btn-primary neon-btn">Search Jobs</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="quick-links">
+        <a href="/consultant" class="quick-link-card glass">
+            <span class="link-icon">🤖</span>
+            <span class="link-text">Talk to Zby</span>
+        </a>
+        <a href="/jobs" class="quick-link-card glass">
+            <span class="link-icon">💼</span>
+            <span class="link-text">Browse Jobs</span>
+        </a>
+        <a href="/applications" class="quick-link-card glass">
+            <span class="link-icon">📋</span>
+            <span class="link-text">My Applications</span>
+        </a>
+        <a href="/pricing" class="quick-link-card glass">
+            <span class="link-icon">💎</span>
+            <span class="link-text">Upgrade Plan</span>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('cvUploadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const resultDiv = document.getElementById('cvResult');
+    resultDiv.innerHTML = '<p class="loading">Parsing CV with Ollama Qwen2...</p>';
+    
+    const response = await fetch('/api/parse-cv', {
+        method: 'POST',
+        body: formData
+    });
+    const data = await response.json();
+    
+    if (data.success) {
+        resultDiv.innerHTML = `<div class="success">✅ CV parsed successfully! Skills: ${data.cv_data.skills.join(', ')}</div>`;
+    } else {
+        resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+    }
+});
+
+document.getElementById('jobSearchForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const response = await fetch('/api/search-jobs', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(Object.fromEntries(formData))
+    });
+    const data = await response.json();
+    window.location.href = `/jobs?results=${data.count}`;
+});
+</script>
+{% endblock %}

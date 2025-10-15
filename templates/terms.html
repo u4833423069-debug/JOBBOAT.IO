@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Terms & Conditions - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="terms-container">
+    <div class="terms-card glass">
+        <h1 class="neon-text">Terms & Conditions</h1>
+        <p class="terms-updated">Last updated: October 15, 2025</p>
+
+        <section class="terms-section">
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using AI JobBot, you accept and agree to be bound by the terms and provision of this agreement.</p>
+        </section>
+
+        <section class="terms-section">
+            <h2>2. Service Description</h2>
+            <p>AI JobBot is an AI-powered career automation platform that provides:</p>
+            <ul>
+                <li>CV parsing using Ollama Qwen2 AI model</li>
+                <li>AI career consultation powered by Anthropic Claude</li>
+                <li>Job search across French and international platforms</li>
+                <li>Automated job application services</li>
+                <li>Cover letter generation</li>
+            </ul>
+        </section>
+
+        <section class="terms-section">
+            <h2>3. Subscription & Pricing</h2>
+            <p><strong>Free Trial:</strong> New users receive 1 month free trial with 100 credits.</p>
+            <p><strong>Monthly Subscription:</strong> €5/month with 500 credits per month.</p>
+            <p><strong>Credits Usage:</strong></p>
+            <ul>
+                <li>CV Parsing: 5 credits</li>
+                <li>Job Search: 2 credits</li>
+                <li>AI Consultant: 3 credits per message</li>
+                <li>Auto-Apply: 10 credits per application</li>
+            </ul>
+        </section>
+
+        <section class="terms-section">
+            <h2>4. User Responsibilities</h2>
+            <p>You agree to:</p>
+            <ul>
+                <li>Provide accurate and current information</li>
+                <li>Keep your login credentials secure</li>
+                <li>Not use the service for any illegal purposes</li>
+                <li>Not abuse or exploit the automated application features</li>
+            </ul>
+        </section>
+
+        <section class="terms-section">
+            <h2>5. AI Services Disclaimer</h2>
+            <p>AI JobBot uses third-party AI services (Ollama, Anthropic). We cannot guarantee 100% accuracy of AI-generated content. Users should review all AI-generated materials before submission.</p>
+        </section>
+
+        <section class="terms-section">
+            <h2>6. Job Application Disclaimer</h2>
+            <p>AI JobBot automates job applications on your behalf. However:</p>
+            <ul>
+                <li>We are not responsible for application acceptance or rejection</li>
+                <li>Job platform terms of service apply</li>
+                <li>Some platforms may restrict automated applications</li>
+            </ul>
+        </section>
+
+        <section class="terms-section">
+            <h2>7. Data Privacy</h2>
+            <p>We collect and process:</p>
+            <ul>
+                <li>Personal information (name, email, CV data)</li>
+                <li>Job search preferences</li>
+                <li>Application history</li>
+                <li>AI conversation logs for service improvement</li>
+            </ul>
+            <p>Your data is stored securely and never shared with third parties without consent.</p>
+        </section>
+
+        <section class="terms-section">
+            <h2>8. Cancellation & Refunds</h2>
+            <p>You may cancel your subscription at any time. Cancellations take effect at the end of the billing period. No refunds for partial months.</p>
+        </section>
+
+        <section class="terms-section">
+            <h2>9. Service Availability</h2>
+            <p>We strive for 99% uptime but do not guarantee uninterrupted service. Maintenance windows will be announced in advance when possible.</p>
+        </section>
+
+        <section class="terms-section">
+            <h2>10. Limitation of Liability</h2>
+            <p>AI JobBot is not liable for:</p>
+            <ul>
+                <li>Job application outcomes</li>
+                <li>Third-party platform changes</li>
+                <li>AI-generated content errors</li>
+                <li>Service interruptions</li>
+            </ul>
+        </section>
+
+        <section class="terms-section">
+            <h2>11. Modifications</h2>
+            <p>We reserve the right to modify these terms at any time. Users will be notified of significant changes.</p>
+        </section>
+
+        <section class="terms-section">
+            <h2>12. Contact</h2>
+            <p>For questions about these terms, contact:</p>
+            <p><strong>Azer Rached</strong></p>
+            <p>Email: support@aijobbot.com</p>
+        </section>
+
+        <div class="terms-accept">
+            <a href="/register" class="btn btn-primary neon-btn">I Accept - Start Free Trial</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.terms-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.terms-card {
+    padding: 3rem;
+}
+
+.terms-card h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.terms-updated {
+    text-align: center;
+    color: #ccc;
+    margin-bottom: 3rem;
+}
+
+.terms-section {
+    margin-bottom: 2.5rem;
+}
+
+.terms-section h2 {
+    color: var(--turquoise);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.terms-section p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+.terms-section ul {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.terms-section li {
+    margin-bottom: 0.5rem;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.terms-accept {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+}
+</style>
+{% endblock %}

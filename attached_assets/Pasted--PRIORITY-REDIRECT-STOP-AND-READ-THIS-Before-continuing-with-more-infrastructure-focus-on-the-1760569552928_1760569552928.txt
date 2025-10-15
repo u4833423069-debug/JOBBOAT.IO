@@ -1,0 +1,173 @@
+# PRIORITY REDIRECT - STOP AND READ THIS
+
+Before continuing with more infrastructure, focus on these critical user-facing fixes. These are what users actually see and experience.
+
+## CRITICAL BUG FIX #1: CV Parsing [object Object] Issue
+
+**The Problem:**
+When users upload a CV, the parsed results display as `[object Object]` instead of readable data. This breaks the entire user experience.
+
+**Root Cause:**
+JSON serialization issue - likely in `src/cv_parser.py`. The parsed CV data (experience, skills, education) is not being properly converted to JSON before sending to frontend.
+
+**Fix Required:**
+1. In `src/cv_parser.py`, ensure all parsed data is properly serialized:
+   - Experience array → format each entry as `{title, company, duration}`
+   - Skills array → format as list of strings
+   - Education array → format as `{school, degree, year}`
+   - All dates/objects → convert to strings
+
+2. Before returning parsed data, validate with: `json.dumps(parsed_data)` to ensure it's serializable
+
+3. Test in browser console - should show structured JSON, NOT `[object Object]`
+
+---
+
+## CRITICAL FIX #2: CV Parsing UI - CINEMATIC DESIGN
+
+**What Users See Now:**
+Raw text or broken object display.
+
+**What Users Should See:**
+Beautiful, frame-by-frame display where each CV element is a separate card/frame:
+- Frame 1: Profile (Name, Email, Phone, LinkedIn)
+- Frame 2: Professional Summary (centered, highlighted)
+- Frame 3: Experience (each job in its own card with company logo placeholder)
+- Frame 4: Skills (grid of skill badges, color-coded)
+- Frame 5: Education (timeline format)
+- Frame 6: Certifications (simple list)
+
+**Design Requirements:**
+- Use Palestine palette: Red #E53E3E, Turquoise #00F0FF, Green #00FF88
+- Glassmorphism background with frosted glass effect
+- Each frame has subtle breathing animation (2s duration)
+- Smooth transitions between frames (fade or slide)
+- Responsive: works on mobile, tablet, desktop
+
+**Implementation:**
+- Create `templates/cv_results.html` with frame-based layout
+- Update `routes/cv_parser.py` to render this template after parsing
+- Add CSS animations in `static/style.css`
+
+---
+
+## CRITICAL FIX #3: ZBY CONSULTANT - FASTER & SMARTER
+
+**Current Issues:**
+- Takes too long to respond
+- Greets user and repeats "I analyzed your CV" on every message
+- Doesn't remember context between messages
+
+**Required Changes:**
+1. Replace Ollama with Anthropic Claude API (faster)
+   - Keep Ollama ONLY for CV parsing (Qwen2)
+   - Use Claude for all Zby chat responses
+
+2. Fix memory/context:
+   - Load conversation history from database at start
+   - Only mention CV analysis ONCE at beginning, never repeat
+   - Remember previous messages and build on them
+
+3. Speed optimization:
+   - Claude responses should arrive in 1-2 seconds max
+   - Use streaming if available for perceived speed
+
+4. Tone:
+   - More natural, less robotic
+   - Occasional humor, personable
+   - No repetitive analysis statements
+
+---
+
+## CRITICAL FIX #4: BUSINESS CARD INTEGRATION
+
+**What to Add:**
+Embed the provided Azer Rached business card HTML into the Zby consultant interface.
+
+**Location:**
+In the consultant chat sidebar or header - display the business card with neon glow effects
+
+**Styling:**
+- Add neon glow: `filter: drop-shadow(0 0 20px #00F0FF)`
+- Subtle animation on hover (scale up slightly)
+- Should feel like it's "floating" in the interface
+
+---
+
+## CRITICAL FIX #5: NEON LOGO
+
+**Requirements:**
+- Design: 3 interlocking circles (AI + Human + Action concept)
+- Colors: Gradient through Palestine palette (Red → Turquoise → Green)
+- Behavior:
+  - Clickable → links to homepage
+  - Hover animation: slight rotation or glow intensification
+  - Gradient shifts every 3-4 seconds (smooth color transitions)
+  - Should feel "alive" and active
+
+**Location:**
+Navbar/header of every page
+
+---
+
+## CRITICAL FIX #6: TERMS & CONDITIONS PAGE
+
+**Create:** `templates/terms.html`
+
+**Content Include:**
+- Data privacy statement
+- User obligations
+- Payment terms (€5/month subscription)
+- Intellectual property
+- Limitation of liability
+- GDPR compliance statement
+
+**Navigation:**
+- Link in footer of every page
+- Accept on signup
+
+---
+
+## CRITICAL FIX #7: LOGIN/SIGNUP - MAKE IT WORK
+
+**Current State:**
+Authentication not working properly
+
+**Required:**
+- Email/password registration working
+- Email/password login working
+- OAuth with Google (if available)
+- Session persistence
+- Redirect to dashboard after login
+- Redirect to login if not authenticated
+
+---
+
+## WORK ORDER PRIORITY
+
+1. **First:** Fix CV parsing [object Object] bug
+2. **Second:** Build cinematic CV results UI
+3. **Third:** Replace Zby AI with faster Claude, fix context memory
+4. **Fourth:** Integrate business card
+5. **Fifth:** Create neon logo
+6. **Sixth:** Add Terms & Conditions page
+7. **Seventh:** Fix authentication
+
+---
+
+## DESIGN GUIDELINES (Apply Everywhere)
+
+- Palestine palette: Red #E53E3E, Turquoise #00F0FF, Green #00FF88
+- Glassmorphism: `background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);`
+- Breathing animation: `@keyframes breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }`
+- 24px baseline grid (all spacing multiples of 24px)
+- Smooth transitions on all interactive elements (200-300ms)
+- No harsh edges - use `border-radius: 12px` minimum
+
+---
+
+## TIMELINE
+
+These fixes are more important than adding more scrapers or features. Users won't care about French job platforms if the core experience is broken.
+
+Focus on making what exists beautiful and functional first.

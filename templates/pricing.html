@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}Pricing - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="pricing-container">
+    <div class="pricing-header">
+        <h1 class="neon-text">Simple, Transparent Pricing</h1>
+        <p>Start with 1 month free. Cancel anytime.</p>
+    </div>
+
+    <div class="pricing-card glass">
+        <div class="pricing-badge">Most Popular</div>
+        <h2 class="pricing-title">Pro Plan</h2>
+        <div class="pricing-amount">
+            <span class="currency">€</span>
+            <span class="price">5</span>
+            <span class="period">/month</span>
+        </div>
+        <p class="pricing-trial">First month free!</p>
+        
+        <div class="pricing-features">
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>500 credits per month</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Unlimited CV parsing with Qwen2</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Zby AI Consultant (Claude)</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>French job platforms access</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Auto-apply to 20+ jobs/month</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Custom cover letter generation</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Application tracking</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">✅</span>
+                <span>Email support</span>
+            </div>
+        </div>
+
+        <button class="btn btn-primary btn-full neon-btn" onclick="startSubscription()">Start Free Trial</button>
+        <p class="pricing-note">No credit card required for trial</p>
+    </div>
+
+    <div class="credits-info glass">
+        <h3>How Credits Work</h3>
+        <div class="credits-grid">
+            <div class="credit-item">
+                <span class="credit-cost">2</span>
+                <span>Job Search</span>
+            </div>
+            <div class="credit-item">
+                <span class="credit-cost">3</span>
+                <span>AI Consultant</span>
+            </div>
+            <div class="credit-item">
+                <span class="credit-cost">5</span>
+                <span>CV Parsing</span>
+            </div>
+            <div class="credit-item">
+                <span class="credit-cost">10</span>
+                <span>Auto-Apply</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.pricing-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.pricing-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.pricing-card {
+    padding: 3rem;
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.pricing-badge {
+    position: absolute;
+    top: -15px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--turquoise), var(--green));
+    color: #000;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.pricing-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.pricing-amount {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.currency {
+    font-size: 2rem;
+    color: var(--turquoise);
+}
+
+.price {
+    font-size: 4rem;
+    font-weight: bold;
+    color: var(--green);
+}
+
+.period {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.pricing-trial {
+    text-align: center;
+    color: var(--green);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.pricing-features {
+    margin: 2rem 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.feature-icon {
+    font-size: 1.2rem;
+}
+
+.pricing-note {
+    text-align: center;
+    color: #ccc;
+    margin-top: 1rem;
+}
+
+.credits-info {
+    padding: 2rem;
+}
+
+.credits-info h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--turquoise);
+}
+
+.credits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+
+.credit-item {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+}
+
+.credit-cost {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+}
+</style>
+
+<script>
+function startSubscription() {
+    {% if user %}
+        window.location.href = '/api/create-checkout';
+    {% else %}
+        window.location.href = '/register';
+    {% endif %}
+}
+</script>
+{% endblock %}

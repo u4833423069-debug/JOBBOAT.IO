@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t.register }} - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card glass">
+        <h2 class="auth-title neon-text">{{ t.register }}</h2>
+        <p style="text-align: center; color: #ccc; margin-bottom: 2rem;">Start your 1-month free trial</p>
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label for="username">{{ t.username }}</label>
+                <input type="text" id="username" name="username" required class="form-input glass">
+            </div>
+            <div class="form-group">
+                <label for="email">{{ t.email }}</label>
+                <input type="email" id="email" name="email" required class="form-input glass">
+            </div>
+            <div class="form-group">
+                <label for="password">{{ t.password }}</label>
+                <input type="password" id="password" name="password" required minlength="6" class="form-input glass">
+            </div>
+            <div class="form-group">
+                <label for="location">{{ t.location }} (Optional)</label>
+                <input type="text" id="location" name="location" placeholder="Paris, France" class="form-input glass">
+            </div>
+            <button type="submit" class="btn btn-primary btn-full neon-btn">{{ t.register }}</button>
+        </form>
+        <p class="auth-link">Already have an account? <a href="/login">{{ t.login }}</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(Object.fromEntries(formData))
+    });
+    const data = await response.json();
+    if (response.ok) {
+        window.location.href = '/dashboard';
+    } else {
+        alert(data.error || 'Registration failed');
+    }
+});
+</script>
+{% endblock %}

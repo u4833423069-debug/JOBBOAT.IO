@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}CV Parsed Successfully - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="cv-results-container">
+    <div class="cv-results-header glass">
+        <div class="success-icon">✅</div>
+        <h1 class="neon-text">CV Parsed Successfully!</h1>
+        <p>Powered by Ollama Qwen2</p>
+    </div>
+
+    <div class="cv-data-grid">
+        <div class="cv-section glass fade-in" style="animation-delay: 0.1s">
+            <h3>👤 Personal Information</h3>
+            <div class="cv-field">
+                <span class="field-label">Name:</span>
+                <span class="field-value">{{ cv_data.name or 'Not extracted' }}</span>
+            </div>
+            <div class="cv-field">
+                <span class="field-label">Email:</span>
+                <span class="field-value">{{ cv_data.email or 'Not extracted' }}</span>
+            </div>
+            <div class="cv-field">
+                <span class="field-label">Phone:</span>
+                <span class="field-value">{{ cv_data.phone or 'Not extracted' }}</span>
+            </div>
+        </div>
+
+        <div class="cv-section glass fade-in" style="animation-delay: 0.2s">
+            <h3>💼 Professional Summary</h3>
+            <div class="cv-field">
+                <span class="field-label">Current Role:</span>
+                <span class="field-value">{{ cv_data.current_role or 'Not specified' }}</span>
+            </div>
+            <div class="cv-field">
+                <span class="field-label">Experience:</span>
+                <span class="field-value">{{ cv_data.years_experience or '0' }} years</span>
+            </div>
+            <div class="cv-field">
+                <span class="field-label">Summary:</span>
+                <p class="field-value">{{ cv_data.summary or 'No summary extracted' }}</p>
+            </div>
+        </div>
+
+        <div class="cv-section glass fade-in" style="animation-delay: 0.3s">
+            <h3>🎯 Skills Extracted</h3>
+            <div class="skills-container">
+                {% if cv_data.skills %}
+                    {% for skill in cv_data.skills %}
+                        <span class="skill-badge">{{ skill }}</span>
+                    {% endfor %}
+                {% else %}
+                    <p class="field-value">No skills extracted</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="cv-section glass fade-in" style="animation-delay: 0.4s">
+            <h3>🎓 Education</h3>
+            {% if cv_data.education %}
+                {% for edu in cv_data.education %}
+                    <div class="cv-field">
+                        <span class="field-value">{{ edu }}</span>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="field-value">No education history extracted</p>
+            {% endif %}
+        </div>
+
+        <div class="cv-section glass fade-in" style="animation-delay: 0.5s">
+            <h3>💻 Work Experience</h3>
+            {% if cv_data.work_experience %}
+                {% for exp in cv_data.work_experience %}
+                    <div class="cv-field experience-item">
+                        <p class="field-value">{{ exp }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="field-value">No work experience extracted</p>
+            {% endif %}
+        </div>
+
+        <div class="cv-section glass fade-in" style="animation-delay: 0.6s">
+            <h3>🌍 Languages</h3>
+            <div class="languages-container">
+                {% if cv_data.languages %}
+                    {% for lang in cv_data.languages %}
+                        <span class="language-badge">{{ lang }}</span>
+                    {% endfor %}
+                {% else %}
+                    <p class="field-value">No languages specified</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="cv-actions">
+        <a href="/dashboard" class="btn btn-secondary glass">Back to Dashboard</a>
+        <a href="/jobs" class="btn btn-primary neon-btn">Find Matching Jobs</a>
+    </div>
+</div>
+
+<style>
+.cv-results-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.cv-results-header {
+    text-align: center;
+    padding: 3rem;
+    margin-bottom: 3rem;
+}
+
+.success-icon {
+    font-size: 4rem;
+    animation: bounce 1s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.cv-results-header h1 {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+}
+
+.cv-data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.cv-section {
+    padding: 2rem;
+}
+
+.cv-section h3 {
+    color: var(--turquoise);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.cv-field {
+    margin-bottom: 1rem;
+}
+
+.field-label {
+    color: #ccc;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.field-value {
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.skills-container, .languages-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.skill-badge, .language-badge {
+    background: linear-gradient(135deg, var(--turquoise), var(--green));
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.experience-item {
+    background: var(--glass-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.cv-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.fade-in {
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+{% endblock %}

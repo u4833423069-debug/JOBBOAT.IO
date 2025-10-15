@@ -79,18 +79,31 @@ document.getElementById('cvUploadForm').addEventListener('submit', async (e) => 
     e.preventDefault();
     const formData = new FormData(e.target);
     const resultDiv = document.getElementById('cvResult');
-    resultDiv.innerHTML = '<p class="loading">Parsing CV with Ollama Qwen2...</p>';
+    const submitBtn = e.target.querySelector('button[type="submit"]');
     
-    const response = await fetch('/api/parse-cv', {
-        method: 'POST',
-        body: formData
-    });
-    const data = await response.json();
+    resultDiv.innerHTML = '<p class="loading">🤖 Parsing CV with Ollama Qwen2... Please wait...</p>';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Parsing...';
     
-    if (data.success) {
-        resultDiv.innerHTML = `<div class="success">✅ CV parsed successfully! Skills: ${data.cv_data.skills.join(', ')}</div>`;
-    } else {
-        resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+    try {
+        const response = await fetch('/api/parse-cv', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.redirect) {
+            window.location.href = data.redirect;
+        } else if (data.error) {
+            resultDiv.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Parse CV with Qwen2';
+        }
+    } catch (err) {
+        resultDiv.innerHTML = '<div class="error">❌ Network error. Please try again.</div>';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Parse CV with Qwen2';
     }
 });
 
@@ -103,7 +116,9 @@ document.getElementById('jobSearchForm').addEventListener('submit', async (e) =>
         body: JSON.stringify(Object.fromEntries(formData))
     });
     const data = await response.json();
-    window.location.href = `/jobs?results=${data.count}`;
+    if (data.success) {
+        window.location.href = `/jobs?results=${data.count}`;
+    }
 });
 </script>
 {% endblock %}

@@ -59,12 +59,12 @@ def inject_global_context():
 def index():
     if 'user_email' in session:
         return redirect(url_for('dashboard'))
-    return '<h1>AI JobBot</h1><p>AI-Powered Career Automation</p><a href="/login">Login</a>'
+    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
-        return '<form method="POST"><input name="email" placeholder="Email"><input name="password" type="password" placeholder="Password"><button>Login</button></form><p>Demo: demo@aijobbot.com / demo123</p>'
+        return render_template('login.html')
     
     data = request.form or request.get_json() or {}
     email = data.get('email')
@@ -77,6 +77,24 @@ def login():
     
     return jsonify({'error': 'Invalid credentials'}), 401
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    
+    data = request.form or request.get_json() or {}
+    email = data.get('email')
+    password = data.get('password')
+    username = data.get('username', email.split('@')[0])
+    location = data.get('location', '')
+    
+    user = create_user(email, username, password, location)
+    if user:
+        session['user_email'] = email
+        return jsonify({'success': True}) if request.is_json else redirect(url_for('dashboard'))
+    
+    return jsonify({'error': 'User already exists'}), 400
+
 @app.route('/dashboard')
 def dashboard():
     if 'user_email' not in session:
@@ -84,7 +102,13 @@ def dashboard():
     
     user = get_user(session['user_email'])
     stats = get_user_stats(session['user_email'])
-    return f'<h1>Dashboard</h1><p>Welcome {user.get("username")}!</p><p>Credits: {stats.get("credits")}</p><a href="/logout">Logout</a>'
+    return render_template('dashboard.html', user=user, stats=stats)
+
+@app.route('/consultant')
+def consultant():
+    if 'user_email' not in session:
+        return redirect(url_for('login'))
+    return render_template('consultant.html')
 
 @app.route('/logout')
 def logout():
@@ -102,14 +126,44 @@ def api_parse_cv():
     file = request.files['cv_file']
     filename = f"{session['user_email']}_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{file.filename}"
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     file.save(filepath)
     
     cv_data = parse_cv_file(filepath)
     
     if 'error' not in cv_data:
-        save_cv_data(session['user_email'], cv_data)
+        # Ensure data is JSON-serializable
+        serialized_cv = {
+            'name': cv_data.get('name', ''),
+            'email': cv_data.get('email', ''),
+            'phone': cv_data.get('phone', ''),
+            'current_role': cv_data.get('current_role', ''),
+            'years_experience': cv_data.get('years_experience', 0),
+            'summary': cv_data.get('summary', ''),
+            'skills': cv_data.get('skills', []) if isinstance(cv_data.get('skills'), list) else [],
+            'education': cv_data.get('education', []) if isinstance(cv_data.get('education'), list) else [],
+            'work_experience': cv_data.get('work_experience', []) if isinstance(cv_data.get('work_experience'), list) else [],
+            'languages': cv_data.get('languages', []) if isinstance(cv_data.get('languages'), list) else []
+        }
+        
+        save_cv_data(session['user_email'], serialized_cv)
+        return jsonify({'success': True, 'redirect': '/cv-results'})
     
-    return jsonify({'success': True, 'cv_data': cv_data})
+    return jsonify({'success': False, 'error': cv_data.get('error', 'Parsing failed')}), 400
+
+@app.route('/cv-results')
+def cv_results():
+    if 'user_email' not in session:
+        return redirect(url_for('login'))
+    
+    user = get_user(session['user_email'])
+    cv_data = user.get('cv_data', {})
+    
+    if not cv_data:
+        return redirect(url_for('dashboard'))
+    
+    return render_template('cv_results.html', cv_data=cv_data)
 
 @app.route('/api/search-jobs', methods=['POST'])
 def api_search_jobs():
@@ -153,6 +207,14 @@ def api_consult():
     except Exception as e:
         logger.error(f"Consultant error: {e}")
         return jsonify({'error': 'Consultant unavailable'}), 500
+
+@app.route('/pricing')
+def pricing():
+    return render_template('pricing.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 @app.route('/health')
 def health():

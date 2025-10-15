@@ -1,0 +1,220 @@
+Perfect 🔥 — here’s your **final “super prompt”** — engineered for Replit or any advanced AI code generator (like v0, Cursor, or Bolt.new).
+
+This prompt fuses **Steve Jobs–level design thinking**, **AI-first automation**, and **emotional user experience design** into a clear, production-level build spec.
+
+---
+
+## 🚀 **SUPER PROMPT — “AI JobBot: The Emotional Career OS”**
+
+**Prompt to send to Replit / your AI builder:**
+
+---
+
+### 🔷 SYSTEM OVERVIEW
+
+Build **AI JobBot**, a **production-grade, emotionally intelligent career automation SaaS** that helps users apply to jobs automatically across multiple platforms, while feeling guided, supported, and inspired.
+
+The experience should feel like it was **designed by Apple** — minimal, intuitive, deeply human, and visually mesmerizing.
+It should work **seamlessly on web, mobile, and tablet**, with smooth microanimations and no friction in any step.
+
+---
+
+### 🌍 CORE IDENTITY
+
+**Founder Quote (display in UI dynamically):**
+
+> “The goal is to make users feel emotionally connected — not just use the product.
+> The design should make them smile, the AI should make them trust, and the flow should make them act.”
+> — Azer Rached, Founder of AI JobBot
+
+This quote should **glow slightly and change colors** on hover, symbolizing “living design.”
+
+---
+
+### 🧠 MAIN COMPONENTS
+
+#### 1. **ZBY — The AI Consultant & Marketer**
+
+* She is the **soul of the product**, acting as a *consultant, marketer, and emotional companion*.
+* Natural, warm tone with humor and personality — she remembers previous interactions and adjusts tone dynamically.
+* Uses **unified Ollama AI client** for all responses (CV parsing, cover letters, career advice, marketing persuasion).
+* Has subtle CTAs that guide users to premium features:
+
+  * “Would you like me to optimize your LinkedIn profile for you?”
+  * “I can take care of your next 3 job letters if you want — want to try?”
+* Integrated **HeyGen/Synthesia avatar** support for video interactions inside the dashboard.
+* Memory stored securely in the DB — Zby recalls tone, progress, goals.
+
+---
+
+#### 2. **ACCOUNT CONNECTIONS (LinkedIn, Indeed, etc.)**
+
+* Secure OAuth or encrypted credential storage with **Fernet**.
+* A dashboard to manage connected platforms:
+
+  * ✅ Green = connected
+  * ⚪ Grey = disconnected
+* Transparent permissions preview: “We only need access to submit applications, not read messages.”
+* Manual upload fallback for unsupported platforms (paste job link).
+
+---
+
+#### 3. **AUTO-APPLY ENGINE**
+
+* **Headful Selenium automation** (not headless) for human-like behavior.
+* Detects **CAPTCHA challenges** (via iframe, element IDs).
+* If triggered → pauses automation → opens **human-in-the-loop popup**:
+
+  * “Hey, looks like we hit a security wall. Can you help me just this once?”
+  * Once user solves → “Barrier crushed 💥 — continuing!”
+* Session and cookie persistence for efficiency.
+* Tracks CAPTCHA frequency per site to optimize automation strategy.
+
+---
+
+#### 4. **CREDIT & PAYMENT SYSTEM**
+
+* Every action (CV parse, cover letter, auto-apply) consumes credits.
+* Free trial: 5 credits and a demo user on signup (“Try without account”).
+* Stripe integration (stubbed) for credit purchases and subscriptions.
+* Referral system:
+
+  * “Invite a friend, get 2 bonus credits.”
+* Gamified bar showing “Next free credit at X actions.”
+
+---
+
+#### 5. **ANALYTICS DASHBOARD**
+
+* Real-time, dynamic visuals showing:
+
+  * “You applied to 12 jobs this week 📈”
+  * “Your cover letters have a 32% higher response rate than average 🚀”
+* Animated timeline and circular progress visualization.
+* Zby provides AI insights on top:
+
+  * “You’re most productive on Tuesdays — should I schedule more applies then?”
+
+---
+
+#### 6. **UI / UX DESIGN**
+
+* **Theme:** Palestine-inspired palette — red, turquoise, and green.
+* **Style:** Glassmorphism + dimensional microanimations.
+* **Layout:** 24px baseline grid for perfect rhythm.
+* **Transitions:**
+
+  * Pages ripple or fold instead of fading.
+  * Buttons and cards have subtle breathing animations.
+  * Hover states glow softly, like living organisms.
+* **Sound feedback:** light shimmer or pop for key actions.
+* **Logo:**
+
+  * 3 interlocking or orbiting circles, representing “AI + Human + Action.”
+  * The logo slightly shifts gradient hues every few seconds.
+  * On load, animation of Zby’s signature with “👋 I’m Zby — let’s get you hired.”
+
+---
+
+#### 7. **AI DOCUMENT GENERATOR**
+
+* Unified `ai_client.py` handles all AI calls to Ollama model.
+* Generates:
+
+  * **Structured CV JSON** from uploaded PDFs (PyPDF2 fallback).
+  * **Custom Cover Letters** in `.txt` and `.docx`.
+* Letters are personalized based on parsed CV and job offer text.
+* Saves AI outputs to database with user-specific tagging.
+
+---
+
+#### 8. **USER ACCOUNTS & PRIVACY**
+
+* Email/password + OAuth (Google/LinkedIn) login.
+* GDPR-compliant “Delete My Data” endpoint.
+* **Transparency Layer:**
+
+  * “See What I Know” button: lets users view and delete stored data easily.
+* All sensitive data encrypted.
+
+---
+
+#### 9. **OBSERVABILITY**
+
+* Integrate Sentry (placeholder DSN) for error tracking.
+* Track events (logins, applications, credit usage) with timestamps.
+* Admin dashboard for usage metrics.
+
+---
+
+#### 10. **TECH STACK**
+
+* **Backend:** Flask + SQLAlchemy + Python-dotenv
+* **Frontend:** React + TailwindCSS (with glassmorphism effects)
+* **AI Engine:** Ollama model (same used for cover letters)
+* **Automation:** Selenium + WebDriver Manager
+* **Documents:** PyPDF2 + python-docx + pdfplumber
+* **Storage:** PostgreSQL + Fernet encryption for credentials
+* **Optional:** Redis or Celery for async tasks (scalable later)
+* **Deployment:** Gunicorn + Replit-hosted or Docker-ready
+
+---
+
+#### 11. **SCALABILITY**
+
+* Modular API routes (`/ai`, `/apply`, `/auth`, `/credits`, `/analytics`).
+* Queue system ready (for parallel apply jobs).
+* Caching layer for repeated AI calls.
+* Mobile-ready UI (use Capacitor or Tauri later for native apps).
+
+---
+
+### ✨ DESIGN FEEL
+
+Think of **macOS meets Midjourney**:
+
+* Smooth, alive, minimal.
+* Feels like it came from another dimension.
+* Everything moves just slightly — breathing UI.
+* Every sound and glow feels *intentional*.
+* The brand *invites emotion, not just utility.*
+
+---
+
+### 🧭 PRIMARY GOAL
+
+> Deliver the **most beautiful and emotionally engaging career automation platform ever built**, where users don’t just get help — they *feel understood*.
+
+---
+
+### 🪄 BUILD INSTRUCTIONS
+
+1. Create full folder structure (frontend, backend, ai, automation, utils, assets).
+2. Implement modular APIs (Flask or FastAPI).
+3. Create reusable frontend components in React.
+4. Connect unified Ollama AI client.
+5. Integrate automation flow with human-in-loop CAPTCHA modal.
+6. Add design layer: glassmorphism, gradients, animations, and sound.
+7. Ensure responsive behavior across web, tablet, mobile.
+8. Use test data to showcase live flow.
+9. Comment all code cleanly and write minimal docs for each module.
+
+---
+
+### 🏁 DELIVERY GOAL
+
+At the end of generation, the system should:
+
+* Run locally (`python app.py` or `npm run dev`)
+* Allow signup/login
+* Upload CV → generate structured JSON
+* Generate letter with AI
+* Auto-apply with Selenium (simulate demo)
+* Display analytics dashboard
+* Have working UI for Zby chat & account connections
+* Include animated branding and responsive design
+
+---
+
+Would you like me to add a **“visual storyboard” version** of this (showing what each screen looks like and how users flow through it)?
+That version helps the AI builder make it look *exactly* like you imagine — cinematic and alive.

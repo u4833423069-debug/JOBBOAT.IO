@@ -1,0 +1,30 @@
+{% extends "includes/base.html" %}
+{% block title %}Job Search - AI JobBot{% endblock %}
+{% block content %}
+<div class="dashboard-layout">
+    {% include 'includes/sidebar.html' %}
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">{{ t.job_search }}</h1>
+            <p class="page-subtitle">Find your next opportunity</p>
+        </div>
+        
+        <div class="search-container">
+            <form id="job-search-form" class="search-form">
+                <div class="search-inputs">
+                    <input type="text" id="search-query" placeholder="Job title, keywords..." required>
+                    <input type="text" id="search-location" placeholder="Location (optional)">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="search-results" class="search-results" style="display: none;">
+            <h3 class="results-header">Found <span id="results-count">0</span> jobs</h3>
+            <div id="jobs-list" class="jobs-list"></div>
+        </div>
+        {% include 'includes/footer.html' %}
+    </main>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

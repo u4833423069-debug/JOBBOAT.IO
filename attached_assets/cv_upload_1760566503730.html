@@ -1,0 +1,146 @@
+{% extends "includes/base.html" %}
+
+{% block title %}Upload CV - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    {% include 'includes/sidebar.html' %}
+    
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">{{ t.upload_cv }}</h1>
+            <p class="page-subtitle">Upload your resume to enable smart job matching</p>
+        </div>
+        
+        {% if user.cv_uploaded %}
+        <div class="cv-status-card success">
+            <div class="status-icon">✅</div>
+            <div class="status-content">
+                <h3>CV Already Uploaded</h3>
+                <p>Your resume is in the system. Upload a new one to replace it.</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="upload-container">
+            <form id="cv-upload-form" class="upload-form">
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-icon">📄</div>
+                    <h3>Drag & Drop Your CV Here</h3>
+                    <p>Or click to browse (PDF or DOCX, max 16MB)</p>
+                    <input type="file" id="cv-file" name="cv_file" accept=".pdf,.docx,.doc" hidden>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block" id="upload-btn" disabled>
+                    Upload & Parse CV
+                </button>
+            </form>
+            
+            <div id="parse-result" class="parse-result" style="display: none;">
+                <h3>Parsed CV Data</h3>
+                <div id="cv-data-display"></div>
+            </div>
+        </div>
+        
+        {% include 'includes/footer.html' %}
+    </main>
+</div>
+
+<script>
+const uploadArea = document.getElementById('upload-area');
+const fileInput = document.getElementById('cv-file');
+const uploadBtn = document.getElementById('upload-btn');
+const form = document.getElementById('cv-upload-form');
+
+uploadArea.addEventListener('click', () => fileInput.click());
+
+uploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadArea.classList.add('dragover');
+});
+
+uploadArea.addEventListener('dragleave', () => {
+    uploadArea.classList.remove('dragover');
+});
+
+uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('dragover');
+    
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        fileInput.files = files;
+        handleFileSelect();
+    }
+});
+
+fileInput.addEventListener('change', handleFileSelect);
+
+function handleFileSelect() {
+    const file = fileInput.files[0];
+    if (file) {
+        uploadArea.querySelector('p').textContent = `Selected: ${file.name}`;
+        uploadBtn.disabled = false;
+    }
+}
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    uploadBtn.disabled = true;
+    uploadBtn.textContent = 'Parsing...';
+    
+    try {
+        const response = await fetch('/api/parse-cv', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showToast('CV parsed successfully!', 'success');
+            displayCVData(result.cv_data);
+        } else {
+            showToast(result.error || 'Parsing failed', 'error');
+        }
+    } catch (error) {
+        showToast('Upload failed', 'error');
+    } finally {
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = 'Upload & Parse CV';
+    }
+});
+
+function displayCVData(data) {
+    const display = document.getElementById('cv-data-display');
+    
+    const html = `
+        <div class="cv-field">
+            <label>Name:</label>
+            <span>${data.name || 'N/A'}</span>
+        </div>
+        <div class="cv-field">
+            <label>Email:</label>
+            <span>${data.email || 'N/A'}</span>
+        </div>
+        <div class="cv-field">
+            <label>Location:</label>
+            <span>${data.location || 'N/A'}</span>
+        </div>
+        <div class="cv-field">
+            <label>Skills:</label>
+            <span>${(data.skills || []).join(', ') || 'N/A'}</span>
+        </div>
+        <div class="cv-field">
+            <label>Experience:</label>
+            <span>${(data.experience || []).join('; ') || 'N/A'}</span>
+        </div>
+    `;
+    
+    display.innerHTML = html;
+    document.getElementById('parse-result').style.display = 'block';
+}
+</script>
+{% endblock %}

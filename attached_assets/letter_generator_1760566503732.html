@@ -1,0 +1,39 @@
+{% extends "includes/base.html" %}
+{% block title %}Cover Letter Generator - AI JobBot{% endblock %}
+{% block content %}
+<div class="dashboard-layout">
+    {% include 'includes/sidebar.html' %}
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">{{ t.letter_generator }}</h1>
+            <p class="page-subtitle">AI-powered personalized cover letters</p>
+        </div>
+        
+        <div class="letter-container">
+            <form id="letter-form" class="letter-form">
+                <div class="form-group">
+                    <label>Company Name *</label>
+                    <input type="text" name="company" required placeholder="Google">
+                </div>
+                <div class="form-group">
+                    <label>Job Title *</label>
+                    <input type="text" name="title" required placeholder="Senior Software Engineer">
+                </div>
+                <div class="form-group">
+                    <label>Job Description</label>
+                    <textarea name="description" rows="6" placeholder="Paste the job description here..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Generate Letter (1 Credit)</button>
+            </form>
+            
+            <div id="letter-output" class="letter-output" style="display: none;">
+                <h3>Your Cover Letter</h3>
+                <div id="letter-text" class="letter-text"></div>
+                <button onclick="downloadLetter()" class="btn btn-secondary">Download</button>
+            </div>
+        </div>
+        {% include 'includes/footer.html' %}
+    </main>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

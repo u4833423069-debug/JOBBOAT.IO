@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azer Rached - Business Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        
+        .card-container {
+            perspective: 1000px;
+        }
+        
+        .business-card {
+            width: 90mm;
+            height: 50mm;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+        
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: 100%;
+        }
+        
+        .left-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .right-section {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .name {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #00d4ff;
+            margin-bottom: 2px;
+        }
+        
+        .title {
+            font-size: 10px;
+            font-weight: 600;
+            color: #e0e0e0;
+            line-height: 1.3;
+        }
+        
+        .divider {
+            width: 25px;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, transparent);
+            margin: 4px 0;
+        }
+        
+        .contact-info {
+            font-size: 9px;
+            color: #b0b0b0;
+            line-height: 1.3;
+            margin-top: 4px;
+        }
+        
+        .contact-info p {
+            margin: 1px 0;
+        }
+        
+        .highlight {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        
+        .skills-badge {
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid #00d4ff;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 8px;
+            color: #00d4ff;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        
+        .print-button {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: #00d4ff;
+            color: #0f3460;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .print-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.5);
+        }
+        
+        .instructions {
+            color: #b0b0b0;
+            font-size: 12px;
+            margin-top: 30px;
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .print-button, .instructions {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="card-container">
+            <div class="business-card">
+                <div class="card-content">
+                    <div class="left-section">
+                        <div>
+                            <div class="name">AZER RACHED</div>
+                            <div class="title">Marketing Manager<br>Acquisition & Growth</div>
+                            <div class="divider"></div>
+                        </div>
+                        <div>
+                            <div class="contact-info">
+                                <p>📍 Paris, Île-de-France</p>
+                                <p>📱 +33 6 02 56 02 29</p>
+                                <p>✉ parisazerrached3@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="right-section">
+                        <div>
+                            <div style="font-size: 11px; font-weight: 600; margin-bottom: 4px;">EXPERTISE</div>
+                            <div class="skills-badge">Performance Marketing</div>
+                            <div class="skills-badge" style="margin-left: 2px;">Data-Driven</div>
+                            <div style="font-size: 9px; color: #b0b0b0; margin-top: 4px;">
+                                <strong style="color: #00d4ff;">30K+</strong> abonnés<br>
+                                <strong style="color: #00d4ff;">20M+</strong> vues<br>
+                                <strong style="color: #00d4ff;">50K€</strong> CA trim.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="print-button" onclick="window.print()">🖨️ Print Card</button>
+        <div class="instructions">
+            Click "Print Card" to print. Standard business card size: 90mm × 50mm. For best results, use glossy business card stock and set print margins to 0mm.
+        </div>
+    </div>
+</body>
+</html>

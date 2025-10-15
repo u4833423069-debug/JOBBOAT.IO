@@ -1,0 +1,322 @@
+{% extends "includes/base.html" %}
+
+{% block title %}Login - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-container">
+        <div class="auth-header">
+            <svg class="auth-logo" width="120" height="40" viewBox="0 0 120 40">
+                <circle cx="15" cy="20" r="12" fill="#E53E3E"/>
+                <circle cx="45" cy="20" r="12" fill="#00F0FF"/>
+                <circle cx="75" cy="20" r="12" fill="#00FF88"/>
+            </svg>
+            <h1>AI JobBot</h1>
+        </div>
+        
+        <div class="auth-tabs">
+            <button class="tab-btn active" data-tab="login">{{ t.login }}</button>
+            <button class="tab-btn" data-tab="register">{{ t.register }}</button>
+        </div>
+        
+        <!-- Login Form -->
+        <div class="tab-content active" id="login-tab">
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label>{{ t.email }}</label>
+                    <input type="email" name="email" required placeholder="you@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ t.password }}</label>
+                    <input type="password" name="password" required placeholder="••••••••">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">{{ t.login }}</button>
+                
+                <p class="form-footer">
+                    Demo: <code>demo@aijobbot.com</code> / <code>demo123</code>
+                </p>
+            </form>
+        </div>
+        
+        <!-- Register Form -->
+        <div class="tab-content" id="register-tab">
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label>{{ t.username }}</label>
+                    <input type="text" name="username" required placeholder="John Doe">
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ t.email }}</label>
+                    <input type="email" name="email" required placeholder="you@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ t.password }}</label>
+                    <input type="password" name="password" required placeholder="••••••••" minlength="6">
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ t.location }} (Optional)</label>
+                    <input type="text" name="location" placeholder="San Francisco, CA">
+                </div>
+                
+                <div class="form-group">
+                    <label>{{ t.experience_years }} (Optional)</label>
+                    <input type="number" name="experience_years" min="0" max="50" placeholder="5">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">{{ t.register }}</button>
+                
+                <p class="form-footer">
+                    Get 5 free credits on signup! CV upload is optional.
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Marcus Aurelius Quote Modal -->
+<div id="quote-modal" class="modal" style="display: none;">
+    <div class="modal-content quote-modal">
+        <h2>Welcome Back</h2>
+        <blockquote class="aurelius-quote">
+            "You have power over your mind - not outside events. Realize this, and you will find strength."
+            <footer>— Marcus Aurelius</footer>
+        </blockquote>
+        <button onclick="closeQuoteModal()" class="btn btn-primary">Let's Go</button>
+    </div>
+</div>
+
+<style>
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 450px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 3rem;
+    backdrop-filter: blur(20px);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-logo {
+    margin-bottom: 1rem;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 0.75rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: rgba(0, 240, 255, 0.1);
+    border-color: #00F0FF;
+    color: #00F0FF;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #00F0FF;
+    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+}
+
+.form-footer code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: rgba(10, 14, 39, 0.95);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    border-radius: 16px;
+    padding: 3rem;
+    max-width: 500px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+}
+
+.aurelius-quote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border-left: 4px solid #00F0FF;
+    background: rgba(0, 240, 255, 0.05);
+}
+
+.aurelius-quote footer {
+    margin-top: 1rem;
+    font-style: normal;
+    color: #00F0FF;
+}
+</style>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const tabName = btn.dataset.tab;
+        
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        btn.classList.add('active');
+        document.getElementById(tabName + '-tab').classList.add('active');
+    });
+});
+
+// Login form
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = {
+        action: 'login',
+        email: formData.get('email'),
+        password: formData.get('password')
+    };
+    
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            if (result.show_quote) {
+                document.getElementById('quote-modal').style.display = 'flex';
+            } else {
+                window.location.href = '/dashboard';
+            }
+        } else {
+            showToast(result.error || 'Login failed', 'error');
+        }
+    } catch (error) {
+        showToast('Network error', 'error');
+    }
+});
+
+// Register form
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = {
+        action: 'register',
+        email: formData.get('email'),
+        username: formData.get('username'),
+        password: formData.get('password'),
+        location: formData.get('location'),
+        experience_years: parseInt(formData.get('experience_years') || 0)
+    };
+    
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showToast(result.message, 'success');
+            setTimeout(() => window.location.href = '/dashboard', 1500);
+        } else {
+            showToast(result.error || 'Registration failed', 'error');
+        }
+    } catch (error) {
+        showToast('Network error', 'error');
+    }
+});
+
+function closeQuoteModal() {
+    document.getElementById('quote-modal').style.display = 'none';
+    window.location.href = '/dashboard';
+}
+</script>
+{% endblock %}

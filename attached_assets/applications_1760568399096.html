@@ -1,0 +1,37 @@
+{% extends "includes/base.html" %}
+{% block title %}Applications - AI JobBot{% endblock %}
+{% block content %}
+<div class="dashboard-layout">
+    {% include 'includes/sidebar.html' %}
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">{{ t.applications }}</h1>
+            <p class="page-subtitle">Track your job applications</p>
+        </div>
+        
+        {% if applications %}
+        <div class="applications-grid">
+            {% for app in applications %}
+            <div class="app-card">
+                <div class="app-header">
+                    <h3>{{ app.title }}</h3>
+                    <span class="status-badge status-{{ app.status }}">{{ app.status }}</span>
+                </div>
+                <p class="app-company">{{ app.company }}</p>
+                <p class="app-location">{{ app.location }}</p>
+                <p class="app-date">Applied: {{ app.applied_at }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <h3>No applications yet</h3>
+            <p>Start searching for jobs and applying!</p>
+            <a href="{{ url_for('job_search') }}" class="btn btn-primary">Search Jobs</a>
+        </div>
+        {% endif %}
+        {% include 'includes/footer.html' %}
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI JobBot - Your AI Career Assistant{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Animated stars background -->
+    <div class="stars"></div>
+    
+    <!-- Main content wrapper -->
+    <div class="app-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <!-- Toast notification container -->
+    <div id="toast-container"></div>
+    
+    <!-- Global scripts -->
+    <script src="{{ url_for('static', filename='toast.js') }}"></script>
+    <script src="{{ url_for('static', filename='cursor.js') }}"></script>
+    <script src="{{ url_for('static', filename='stars.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

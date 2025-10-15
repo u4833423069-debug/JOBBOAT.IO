@@ -1,0 +1,32 @@
+<footer class="app-footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <svg class="footer-logo" width="80" height="30" viewBox="0 0 120 40">
+                <circle cx="15" cy="20" r="10" fill="#E53E3E"/>
+                <circle cx="45" cy="20" r="10" fill="#00F0FF"/>
+                <circle cx="75" cy="20" r="10" fill="#00FF88"/>
+            </svg>
+            <p class="footer-tagline">{{ t.tagline }}</p>
+        </div>
+        
+        <div class="footer-business-card">
+            <div class="business-card">
+                <p class="bc-name">💼 {{ t.footer_text }}</p>
+                <p class="bc-contact">
+                    🌐 <a href="https://{{ t.footer_website }}" target="_blank">{{ t.footer_website }}</a>
+                    | 📧 <a href="mailto:{{ t.footer_contact }}">{{ t.footer_contact }}</a>
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer-links">
+            <a href="#" class="footer-link">Privacy Policy</a>
+            <a href="#" class="footer-link">Terms of Service</a>
+            <a href="#" class="footer-link">Support</a>
+        </div>
+        
+        <p class="footer-copyright">
+            © {{ now.year }} AI JobBot. Built with ❤️ for job seekers worldwide.
+        </p>
+    </div>
+</footer>

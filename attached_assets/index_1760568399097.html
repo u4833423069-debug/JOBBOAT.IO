@@ -1,0 +1,220 @@
+{% extends "includes/base.html" %}
+
+{% block title %}AI JobBot - AI-Powered Career Automation{% endblock %}
+
+{% block content %}
+<div class="landing-page">
+    <header class="landing-header">
+        <!-- Animated 3-circle logo with Palestine colors -->
+        <svg class="hero-logo" width="180" height="60" viewBox="0 0 180 60">
+            <circle class="logo-pulse-1" cx="30" cy="30" r="20" fill="#E53E3E" opacity="0.8"/>
+            <circle class="logo-pulse-2" cx="90" cy="30" r="20" fill="#00F0FF" opacity="0.8"/>
+            <circle class="logo-pulse-3" cx="150" cy="30" r="20" fill="#00FF88" opacity="0.8"/>
+        </svg>
+        
+        <h1 class="hero-title">
+            AI<span class="highlight">🤖</span>JobBot
+        </h1>
+        
+        <p class="hero-subtitle">{{ t.tagline }}</p>
+        
+        <div class="hero-cta">
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-glow">
+                Get Started - 5 Free Credits
+            </a>
+            <a href="{{ url_for('login') }}?demo=true" class="btn btn-secondary">
+                {{ t.try_demo }}
+            </a>
+        </div>
+    </header>
+    
+    <section class="features-section">
+        <h2 class="section-title">Automate Your Job Search with AI</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Smart CV Parsing</h3>
+                <p>Upload your resume and let AI extract your skills, experience, and achievements instantly.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Multi-Platform Search</h3>
+                <p>Search thousands of jobs across LinkedIn, Indeed, Glassdoor, and more in seconds.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3>AI Cover Letters</h3>
+                <p>Generate personalized, compelling cover letters tailored to each job in minutes.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Meet Zby - Your AI Consultant</h3>
+                <p>Get career advice, CV tips, and LinkedIn optimization from your personal AI advisor.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>One-Click Apply</h3>
+                <p>Apply to jobs automatically with smart CAPTCHA handling and session management.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Track Everything</h3>
+                <p>Dashboard with application tracking, success metrics, and activity timeline.</p>
+            </div>
+        </div>
+    </section>
+    
+    {% include 'includes/footer.html' %}
+</div>
+
+<style>
+.landing-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-header {
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-logo {
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.5));
+}
+
+.logo-pulse-1, .logo-pulse-2, .logo-pulse-3 {
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.logo-pulse-2 { animation-delay: 0.3s; }
+.logo-pulse-3 { animation-delay: 0.6s; }
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #E53E3E, #00F0FF, #00FF88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.highlight {
+    font-size: 3rem;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 3rem;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00F0FF, #00FF88);
+    color: #0A0E27;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 240, 255, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.features-section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 12px 48px rgba(0, 240, 255, 0.15);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+}
+</style>
+{% endblock %}

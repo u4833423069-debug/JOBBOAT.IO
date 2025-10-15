@@ -1,0 +1,117 @@
+{% extends "includes/base.html" %}
+
+{% block title %}Dashboard - AI JobBot{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    {% include 'includes/sidebar.html' %}
+    
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">{{ t.welcome }}, {{ user.username }}!</h1>
+            <p class="page-subtitle">Here's your job search overview</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <div class="stat-label">Total Applications</div>
+                    <div class="stat-value">{{ stats.total_applications }}</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-content">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value">{{ stats.pending }}</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <div class="stat-label">Interviews</div>
+                    <div class="stat-value">{{ stats.interviews }}</div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-content">
+                    <div class="stat-label">Credits</div>
+                    <div class="stat-value">{{ stats.credits }}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions-section">
+            <h2 class="section-title">Quick Actions</h2>
+            
+            <div class="actions-grid">
+                {% if not stats.cv_uploaded %}
+                <a href="{{ url_for('cv_upload') }}" class="action-card action-highlight">
+                    <div class="action-icon">📄</div>
+                    <div class="action-content">
+                        <h3>Upload Your CV</h3>
+                        <p>Start by uploading your resume to unlock smart job matching</p>
+                    </div>
+                    <div class="action-arrow">→</div>
+                </a>
+                {% endif %}
+                
+                <a href="{{ url_for('job_search') }}" class="action-card">
+                    <div class="action-icon">🔍</div>
+                    <div class="action-content">
+                        <h3>Search Jobs</h3>
+                        <p>Find opportunities across multiple platforms</p>
+                    </div>
+                    <div class="action-arrow">→</div>
+                </a>
+                
+                <a href="{{ url_for('letter_generator') }}" class="action-card">
+                    <div class="action-icon">✍️</div>
+                    <div class="action-content">
+                        <h3>Generate Cover Letter</h3>
+                        <p>Create personalized letters with AI</p>
+                    </div>
+                    <div class="action-arrow">→</div>
+                </a>
+                
+                <a href="{{ url_for('my_consultant') }}" class="action-card">
+                    <div class="action-icon">🤖</div>
+                    <div class="action-content">
+                        <h3>Talk to Zby</h3>
+                        <p>Get career advice from your AI consultant</p>
+                    </div>
+                    <div class="action-arrow">→</div>
+                </a>
+            </div>
+        </div>
+        
+        {% if applications %}
+        <div class="recent-section">
+            <h2 class="section-title">Recent Applications</h2>
+            
+            <div class="applications-list">
+                {% for app in applications %}
+                <div class="application-item">
+                    <div class="app-icon">💼</div>
+                    <div class="app-details">
+                        <h3>{{ app.title }}</h3>
+                        <p>{{ app.company }} • {{ app.location }}</p>
+                    </div>
+                    <div class="app-status">
+                        <span class="status-badge status-{{ app.status }}">{{ app.status }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% include 'includes/footer.html' %}
+    </main>
+</div>
+{% endblock %}
